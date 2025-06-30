@@ -1,0 +1,54 @@
+name: test,bnuild,deploy
+on: 
+  push:
+    branches:
+      -main
+    paths-ignore:
+      '.github/workflows/*'
+  pull_request:
+    types: 
+      - opened
+jobs:
+  test:
+    runs-on: ubuntu latest
+    steps:
+    - name: get code
+      uses: actions/checkout@v4
+    - name: install dependencies
+      run: npm ci
+    - name: run test
+      run: npm test
+  build:
+    needs: test
+    runs-on: ubuntu latest
+    steps:
+    - name: upload artifact
+      uses: actions/upload-artifact@v4
+      with: 
+        name: output_files
+        path: |
+          dist
+          package.json
+    - name: get code
+      uses: actions/checkout@v4
+    - name: install dependencies
+      run: npm ci
+    - name: run build
+      run: npm run build
+  deploy:
+    needs: build
+    runs-on: ubuntu latest
+    steps:
+    - name: download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: output_files
+    - name: get code
+      uses: actions/checkout@v4
+    - name: install dependencies
+      run: npm ci
+    - name: deploy website
+      run: echo "hiiii"
+      
+  
+      
