@@ -1,4 +1,4 @@
-name: test,bnuild,deploy
+name: test,build,deploy
 on: 
   push:
     branches:
@@ -48,7 +48,7 @@ jobs:
     - name: install dependencies
       run: npm ci
     - name: deploy website
-      run: echo "hiiii"
+      run: echo "hiiiii"
       
   
       
