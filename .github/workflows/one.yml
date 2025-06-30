@@ -1,0 +1,42 @@
+name: test,bnuild,deploy
+on: 
+  push:
+    branches:
+      -main
+    paths-ignore:
+      '.github/workflows/*'
+  pull_request:
+    types: 
+      - opened
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu latest
+    steps:
+    - name: get code
+      uses: actions/checkout@v4
+    - name: install dependencies
+      run: npm ci
+    - name: run test
+      run: npm test
+  build:
+    runs-on: ubuntu latest
+    steps:
+    - name: get code
+      uses: actions/checkout@v4
+    - name: install dependencies
+      run: npm ci
+    - name: run build
+      run: npm run build
+  deploy:
+    runs-on: ubuntu latest
+    steps:
+    - name: get code
+      uses: actions/checkout@v4
+    - name: install dependencies
+      run: npm ci
+    - name: deploy website
+      run: echo "hiiii"
+      
+  
+      
