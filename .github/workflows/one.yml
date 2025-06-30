@@ -6,9 +6,12 @@ on:
     paths-ignore:
       '.github/workflows/*'
   pull_request:
-    types: 
-      - opened
-  workflow_dispatch:
+    types: [opened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     runs-on: ubuntu latest
